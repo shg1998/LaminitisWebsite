@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <article class="media content-section">
+                <div class="media-body">
+                    <img class="article-img2" src="{{imagepatient.image_imag.url}}">
+                </div>
+            </article>
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">edit points</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">submit</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

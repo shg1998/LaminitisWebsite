@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card-deck card-columns" >
+  <a href="{% url 'patient-create' %}" style="margin: 15px;">
+  <div class="card mb-3" style="min-width: 290px; min-height: 135px;">
+      <div class="row no-gutters">
+        <div class="col-md-8">
+          <div class="card-body">
+             <h1 class="text-center angulair"><span>&#43;</span></h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+  {% for patient in patient_list %}
+    <a href="{% url 'patient-detail' patient.id %}" style="margin: 15px;">
+    <div class="card mb-3" style="min-width: 290px; min-height: 135px;">
+        <div class="row no-gutters">
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title"> Name: {{ patient.name_pati }}</h5>
+              <h5> Doctor: N/A</h5>
+              <p class="card-text"><small class="text-muted">Date : {{ patient.date_pati|date:"F d, Y" }}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  {% endfor %}
+</div>
+
+ {% if is_paginated %}
+   {% if page_obj.has_previous %}
+     <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+     <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+   {% endif %}
+
+   {% for num in page_obj.paginator.page_range %}
+     {% if page_obj.number == num %}
+       <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+     {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+       <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+     {% endif %}
+   {% endfor %}
+
+   {% if page_obj.has_next %}
+     <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+     <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+   {% endif %}
+ {% endif %}
+
+{% endblock %}

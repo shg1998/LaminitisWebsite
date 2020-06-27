@@ -1,0 +1,309 @@
+{#{% extends "base.html" %}#}
+{#{% load crispy_forms_tags %}#}
+{#{% block content %}#}
+{#    <div class="content-section">#}
+{#        <form method="POST">#}
+{#            {% csrf_token %}#}
+{#            <article class="media content-section">#}
+{#                <div class="media-body">#}
+{#                    <img class="article-img2" src="{{imagepatient.image_imag.url}}">#}
+{#                </div>#}
+{#            </article>#}
+{#            <fieldset class="form-group">#}
+{#                <legend class="border-bottom mb-4">edit points</legend>#}
+{#                {{ form|crispy }}#}
+{#            </fieldset>#}
+{#            <div class="form-group">#}
+{#                <button class="btn btn-outline-info" id="salam1" type="submit">submit</button>#}
+{#            </div>#}
+{#        </form>#}
+{#    </div>#}
+{#{% endblock content %}#}
+{##}
+{#{% load static %}#}
+
+
+{% extends 'base.html' %}
+{% block content %}
+<html lang="en">
+<script type="text/javascript" src="/static/js/Viewer/i18next.min.js"></script>
+<script type="text/javascript" src="/static/js/Viewer/i18nextXHRBackend.min.js"></script>
+<script type="text/javascript" src="/static/js/Viewer/i18nextBrowserLanguageDetector.min.js"></script>
+<script type="text/javascript" src="/static/js/Viewer/jszip.min.js"></script>
+<script type="text/javascript" src="/static/js/Viewer/konva.min.js"></script>
+<script type="text/javascript" src="/static/js/Viewer/magic-wand-min.js"></script>
+<!-- Third party (viewer) -->
+<script type="text/javascript" src="/static/js/Viewer/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/Viewer/nprogress.js"></script>
+
+<!-- decoders -->
+<script type="text/javascript" src="/static/js/Viewer/rle.js"></script>
+<script type="text/javascript" src="/static/js/Viewer/jpx.js"></script>
+<script type="text/javascript" src="/static/js/Viewer/util.js"></script>
+<script type="text/javascript" src="/static/js/Viewer/arithmetic_decoder.js"></script>
+<script type="text/javascript" src="/static/js/Viewer/jpg.js"></script>
+<script type="text/javascript" src="/static/js/Viewer/lossless-min.js"></script>
+<!-- dwv -->
+<script type="text/javascript" src="/static/js/Viewer/dwv.js"></script>
+
+<head >
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/Viewer/style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <script src="/static/js/Viewer/jquery.min.js"></script>
+    <script src="/static/js/Viewer/popper.min.js"></script>
+    <script src="/static/js/Viewer/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/static/js/Viewer/bootstrap.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <title>simple dicom viewer!</title>
+</head>
+
+<body style="background-color: black">
+    <div class="container" style="margin-top:25px" >
+        <div class="btn-group drop" style="margin-left: 1rem;">
+            <button type="button" class="btn btn-danger">Save</button>
+            <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <button class="dropdown-item">Save</button>
+                <button class="btn btn-danger btn-block " id="download-btn">Download &nbsp;
+                    <i class="fa fa-download"></i></button>
+
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item">Something</button>
+            </div>
+        </div>
+        <!-- horizontal button 2 -->
+        <div class="btn-group drop">
+            <button type="button" class="btn btn-warning">Tools(1)</button>
+            <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <button class="btn btn-success btn-block" onclick="set('Ruler')">Ruler &nbsp;
+                    <i class='fas fa-ruler-vertical'></i>
+                </button>
+                <button class="btn btn-danger btn-block" onclick="set('Protractor')">Angle &nbsp;
+                    <i class="fa fa-angle-up"></i>
+                </button>
+                <button class="btn btn-warning btn-block" onclick="set('Rectangle')">Rectangle &nbsp;
+                    <i class="fa fa-pencil-square-o"></i>
+                </button>
+            </div>
+        </div>
+        <!-- horizontal button 3 -->
+        <div class="btn-group drop">
+            <button type="button" class="btn btn-info">Tools(2)</button>
+            <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <button class="btn btn-success btn-block " onclick="set('Ellipse')">Ellipse &nbsp;
+                    <i class="fa fa-genderless " style="font-size: 24px;"></i>
+                </button>
+                <button class="btn btn-danger btn-block" onclick="set('FreeHand')">Freehand</button>
+                <button class="btn btn-warning btn-block" onclick="set('Arrow')">Arrow &nbsp;
+                    <i class="fa fa-mouse-pointer"></i>
+                </button>
+
+            </div>
+        </div>
+        <!-- horizontal button 4 -->
+        <div class="btn-group drop">
+            <button type="button" class="btn btn-success">punctuation</button>
+            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <button class="btn btn-danger btn-block punctuation">Prop &nbsp;
+                    <i class="fa fa-circle"></i>
+                </button>
+                <button class="btn btn-warning btn-block Erase-btn">Erase points &nbsp;
+                    <i class="fa fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+        <!-- horizontal button 5 -->
+        <div class="btn-group drop">
+            <button type="button" class="btn btn-warning">Split screen</button>
+            <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <button class="dropdown-item">2*2</button>
+                <button class="dropdown-item">2*3</button>
+                <button class="dropdown-item">3*3</button>
+                <button class="dropdown-item">3*4</button>
+            </div>
+        </div>
+        <!-- horizontal button 6 -->
+        <div class="btn-group drop">
+            <button type="button" class="btn btn-primary">Display</button>
+            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <div class="btn-group btn-block" style="margin-top: .5rem;">
+                    <button class="filter-btn brightness-remove btn btn-danger">-</button>
+                    <button class=" btn btn-secondary btn-disabled" disabled>Brightness</button>
+                    <button class="filter-btn brightness-add btn btn-danger">+</button>
+                </div>
+                <div class="btn-group btn-block" style="margin-top: .5rem; margin-bottom: 0.5rem;">
+                    <button class="filter-btn contrast-remove btn btn-danger">-</button>
+                    <button class=" btn btn-secondary btn-disabled" disabled>Contrasttt</button>
+                    <button class="filter-btn contrast-add btn btn-danger">+</button>
+                </div>
+                <div class="dropdown-divider"></div>
+                <button class="btn btn-success btn-block" id="revert-btn">Revert Effects &nbsp;
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- horizontal button 7 -->
+        <div class="btn-group drop">
+            <button type="button" class="btn btn-danger">Transform</button>
+            <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <button class="dropdown-item">Move</button>
+                <button class="dropdown-item">Rotate 90 cw</button>
+                <button class="dropdown-item">Rotate 90 ccw</button>
+                <div class="btn-group btn-block" style="margin-top: .5rem; margin-bottom: 0.5rem;">
+                    <button class="filter-btn contrast-remove btn btn-danger">-</button>
+                    <button class=" btn btn-secondary btn-disabled" disabled>Zoom</button>
+                    <button class="filter-btn contrast-add btn btn-danger">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- horizontal button 8 -->
+        <div class="btn-group drop">
+            <button type="button" class="btn btn-warning">Server</button>
+            <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <button class="btn btn-info btn-block getPoints-btn ">Get points</button>
+                <button class="btn btn-light btn-block addPoints-btn">Add Points</button>
+            </div>
+        </div>
+
+        <!-- horizontal button 9 -->
+        <div class="btn-group drop">
+            <button type="button" class="btn btn-success">Undo-Redo</button>
+            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <button class="btn btn-block btn-danger" id="undo">Undo</button>
+                <button class="btn btn-block btn-danger" id="redo">Redo</button>
+                <button class="dropdown-item">Something else here</button>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item">Something</button>
+            </div>
+        </div>
+
+        <div class="row" style="margin-left: 0.08rem; margin-top: 0.5rem;">
+
+            <div class="col-md-3" style="background-color: gray ; border-radius: 1.5rem; ">
+                <img src="http://127.0.0.1:8000/media/founder-xray1.png" style="width: 240px; height: 150px; align-items: 
+                center; margin-top: 30px; margin-left: 6px; border: 3.5px solid skyblue; border-radius: 1rem; cursor: pointer;">
+                 <img src="http://s12.picofile.com/file/8401129300/troy_2016_1024x674.jpg" style="width: 240px; height: 150px; align-items: 
+                 center; margin-top: 20px; margin-left: 6px; border: 3.5px solid rgb(20, 54, 148); border-radius: 1rem; cursor: pointer;">
+                 <img src=" http://s13.picofile.com/file/8401129818/K1380843_Oscar_Smith0002_Copy_1024x919.jpg" style="width: 240px; height: 150px; align-items: 
+                 center; margin-top: 20px; margin-left: 6px; border: 3.5px solid rgb(20, 54, 148); border-radius: 1rem; cursor: pointer;">
+            </div>
+           
+            <div class="col-md-9" style="margin-top: -0.8rem;">
+                <div class="">
+                    <div id="dwv">
+                        <div class="layerContainer" id="salam">
+                            <canvas class="imageLayer" id="canvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-1">
+                <div id='ss_menu'>
+                    <div> <i class="fa fa-facebook-official"></i> </div>
+                    <div> <i class="fa fa-twitter"></i> </div>
+                    <div> <i class="fa fa-linkedin"></i> </div>
+                    <div> <i class="fa fa-google-plus"></i> </div>
+                    <div class='menu'>
+                        <div class='share' id='ss_toggle' data-rot='180'>
+                            <div class='circle'></div>
+                            <div class='bar'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script>
+    <script src="/static/js/Viewer/script.js"></script>
+    <script src="/static/js/Viewer/jquery.js"></script>
+    <script>
+
+        // // base function to get elements
+        // dwv.gui.getElement = dwv.gui.base.getElement;
+        // // dwv.gui.displayProgress = function (percent) {};
+
+        // // create the dwv app
+        // var app = new dwv.App();
+        // // initialise with the id of the container div
+        // var options = {
+        //     "containerDivId": "dwv",
+
+
+        // };
+        // app.init(options);
+        // // load dicom data
+        // app.loadURLs(["http://s12.picofile.com/file/8398366550/founder_xray1.png"]);
+    </script>
+</body>
+{% endblock %}
+
+</html>

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">{{ object.doctor_pati }}</a>
+        <small class="text-muted">{{ object.date_pati|date:"F d, Y" }}</small>
+        {% if object.doctor_pati == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'patient-update' object.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'patient-delete' object.id %}">Delete</a>
+          </div>
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'image-add' object.id %}">add Image</a>
+          </div>
+        {% endif %}
+      </div>
+      <h2 class="article-title">{{ object.name_pati }}</h2>
+      <p class="article-content">{{ object.description_pati }}</p>
+
+
+    {% if image_class_list %}
+        {% for image_class in image_class_list %}
+            <article class="media content-section">
+              <div class="media-body">
+                <img class="article-img2" src="{{image_class.image_imag.url}}">
+                <p class="article-content">{{ image_class.points_imag }}</p>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'points-update' object.id forloop.counter0 %}">edit points(viewer)</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'image-delete' object.id forloop.counter0 %}">Delete</a>
+              </div>
+            </article>
+        {% endfor %}
+    {% else %}
+        <h1>No image</h1>
+    {% endif %}
+
+    </div>
+  </article>
+{% endblock content %}
