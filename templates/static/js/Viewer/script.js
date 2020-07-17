@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    
     var toggle = $('#ss_toggle');
     var menu = $('#ss_menu');
     var rot;
@@ -49,7 +50,7 @@ $(document).ready(function () {
     var Url = 'http://127.0.0.1:8000/webservice/getImage/' + res[4] + "/" + res[5] + "/";
 
 
-
+    WB=document.getElementById("WorkBench");
 
     var canvas = document.getElementById('canvas');
     context = canvas.getContext('2d');
@@ -59,6 +60,7 @@ $(document).ready(function () {
     img.onload = function () {
         canvas.width = img.width;
         canvas.height = img.height;
+        WB.height=img.height;
         context.drawImage(img, 0, 0, img.width, img.height);
         canvas.removeAttribute("data-caman-id");
     };

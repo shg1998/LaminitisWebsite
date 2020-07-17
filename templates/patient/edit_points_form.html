@@ -46,8 +46,10 @@
 <!-- dwv -->
 <script type="text/javascript" src="/static/js/Viewer/dwv.js"></script>
 
-<head >
+<head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/Viewer/style2.css">
@@ -67,7 +69,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
-        <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -87,7 +89,7 @@
 </head>
 
 <body style="background-color: black">
-    <div class="container" style="margin-top:25px" >
+    <div class="container" style="margin-top:25px">
         <div class="btn-group drop" style="margin-left: 1rem;">
             <button type="button" class="btn btn-danger">Save</button>
             <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
@@ -243,17 +245,96 @@
             </div>
         </div>
 
-        <div class="row" style="margin-left: 0.08rem; margin-top: 0.5rem;">
+        <div class="row" style="margin-left: 0.08rem; margin-top: 0.5rem; ">
 
-            <div class="col-md-3" style="background-color: gray ; border-radius: 1.5rem; ">
-                <img src="http://127.0.0.1:8000/media/founder-xray1.png" style="width: 240px; height: 150px; align-items: 
-                center; margin-top: 30px; margin-left: 6px; border: 3.5px solid skyblue; border-radius: 1rem; cursor: pointer;">
-                 <img src="http://s12.picofile.com/file/8401129300/troy_2016_1024x674.jpg" style="width: 240px; height: 150px; align-items: 
-                 center; margin-top: 20px; margin-left: 6px; border: 3.5px solid rgb(20, 54, 148); border-radius: 1rem; cursor: pointer;">
-                 <img src=" http://s13.picofile.com/file/8401129818/K1380843_Oscar_Smith0002_Copy_1024x919.jpg" style="width: 240px; height: 150px; align-items: 
-                 center; margin-top: 20px; margin-left: 6px; border: 3.5px solid rgb(20, 54, 148); border-radius: 1rem; cursor: pointer;">
+            <div class="col-md-3" id="WorkBench"
+                style="background-color: gray ; border-radius: 1.5rem; overflow-y: auto;">
+                <div class="tab">
+                    <button class="tablinks" id="firsst" onclick="openSection(event, 'London')">
+                        <i class="fa fa-desktop" style="font-size: 3.8rem"></i>
+                    </button>
+                    <button class="tablinks" onclick="openSection(event, 'Paris')">
+                        <i class="fa fa-wrench" style="font-size: 3.8rem"></i>
+                    </button>
+                    <button class="tablinks" onclick="openSection(event, 'Tokyo')" style="direction: rtl; ">
+                        <i class="material-icons" style="font-size: 3.6rem;">content_paste</i>
+                    </button>
+                </div>
+                <!-- complete div for worktable section -->
+                <div id="London" class="tabcontent">
+                    <img src="http://s12.picofile.com/file/8401129300/troy_2016_1024x674.jpg"
+                        style="width: 240px; height: 150px; align-items: 
+                    center; margin-left: -0.8rem;  border: 3.5px solid rgb(20, 54, 148); border-radius: 1rem; cursor: pointer;">
+                    <img src=" http://s13.picofile.com/file/8401129818/K1380843_Oscar_Smith0002_Copy_1024x919.jpg"
+                        style="width: 240px; height: 150px; align-items: 
+                    center; margin-left: -0.8rem; margin-top: 20px;  border: 3.5px solid rgb(20, 54, 148); border-radius: 1rem; cursor: pointer;">
+
+                </div>
+                <!-- complete div for Tools section -->
+                <div id="Paris" class="tabcontent">
+                    <h5>Anotations</h5>
+                    <div class="Anotation">
+                        <button class="btn  punctuation" style="margin-left: .7rem;">
+                            <i class="fa fa-circle" style="color: black; font-size: 1.2rem;"></i>
+                        </button>
+                        <button class="btn" onclick="set('Ruler')">
+                            <i class='fas fa-ruler-vertical' style="color: black; font-size: 1.8rem;"></i>
+                        </button>
+                        <button class="btn " onclick="set('Protractor')">
+                            <i class="fa fa-angle-up" style="color: black; font-size: 1.8rem;"></i>
+                        </button>
+                        <button class="btn " onclick="set('Rectangle')">
+                            <i class="fa fa-square" style="color: black; font-size: 1.8rem;"></i>
+                        </button>
+                        <button class="btn " onclick="set('Ellipse')" style="margin-left: 0.3rem;">
+                            <i class="fa fa-genderless " style="color: black; font-size: 2.8rem;"></i>
+                        </button>
+                        <button class="btn " onclick="set('FreeHand')">
+                            <i class="material-icons" style="font: size 2.5rem;">create</i>
+                        </button>
+                        <button class="btn " onclick="set('Arrow')">
+                            <i class="fa fa-mouse-pointer" style="color: black; font-size: 1.5rem;"></i>
+                        </button>
+                        <button class="btn " id="undo">
+                            <i class="material-icons" style="color: black; font-size: 2rem;">undo</i>
+                        </button>
+                        <button class="btn " id="redo" style="margin-left: 0.3rem;">
+                            <i class="material-icons" style="color: black; font-size: 2rem;">refresh</i>
+                        </button>
+                        <button class="btn  Erase-btn">
+                            <i class="fa fa-eraser" style="color: black; font-size: 1.7rem;"></i>
+                        </button>
+                    </div>
+                    <h5>Functions</h5>
+                    <div class="Function">
+                        <button class="btn  Brightness-btn">
+                            <i class="material-icons" style="color: black; font-size: 2rem;">brightness_6</i>
+                        </button>
+                        <button class="btn  Contrast-btn">
+                            <i class="material-icons" style="color: black; font-size: 2rem;">tonality</i>
+                        </button>
+                        <!-- <button class="btn move-btn">
+                            <i class="fa fa-arrows" style="color: black; font-size: 2rem;"></i>
+                        </button> -->
+                    </div>
+                    <h5>Other</h5>
+                    <div class="Other">
+
+                        <button class="btn" id="download-btn">
+                            <i class="fa fa-download" style="color: black; font-size: 1.6rem;"></i>
+                        </button>
+                        <button class="btn" id="revert-btn">
+                            <i class="fa fa-refresh" style="color: black; font-size: 1.6rem;"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- complete div for Patient information section -->
+                <div id="Tokyo" class="tabcontent">
+                    <h2>Comming soon</h2>
+
+                </div>
             </div>
-           
+
             <div class="col-md-9" style="margin-top: -0.8rem;">
                 <div class="">
                     <div id="dwv">
@@ -262,7 +343,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="col-md-1">
                 <div id='ss_menu'>
@@ -302,6 +382,27 @@
         // app.init(options);
         // // load dicom data
         // app.loadURLs(["http://s12.picofile.com/file/8398366550/founder_xray1.png"]);
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            document.getElementById("firsst").click();
+        });
+        function openSection(evt, cityName) {
+            var i, tabcontent, tablinks;
+            WB = document.getElementById("WorkBench");
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+        }
     </script>
 </body>
 {% endblock %}
