@@ -1,148 +1,68 @@
 $(document).ready(function () {
-    
-    var toggle = $('#ss_toggle');
-    var menu = $('#ss_menu');
+
+    var i = 0;
+    var j = 0;
     var rot;
-
-    $('#ss_toggle').on('click', function (ev) {
-        rot = parseInt($(this).data('rot')) - 180;
-        menu.css('transform', 'rotate(' + rot + 'deg)');
-        menu.css('webkitTransform', 'rotate(' + rot + 'deg)');
-        if ((rot / 180) % 2 == 0) {
-            //Moving in
-            toggle.parent().addClass('ss_active');
-            toggle.addClass('close');
-        } else {
-            //Moving Out
-            toggle.parent().removeClass('ss_active');
-            toggle.removeClass('close');
-        }
-        $(this).data('rot', rot);
-    });
-
-    menu.on('transitionend webkitTransitionEnd oTransitionEnd', function () {
-        if ((rot / 180) % 2 == 0) {
-            $('#ss_menu div i').addClass('ss_animate');
-        } else {
-            $('#ss_menu div i').removeClass('ss_animate');
-        }
-    });
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-36251023-1']);
-    _gaq.push(['_setDomainName', 'jqueryscript.net']);
-    _gaq.push(['_trackPageview']);
-
-    (function () {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
     var XPosition;
     var YPosition;
-    var i = 0;
     var points = [];
-    var j = 0;
-
-    var currentURL = document.URL;
-    var res = currentURL.split("/");
-
-    var Url = 'http://127.0.0.1:8000/webservice/getImage/' + res[4] + "/" + res[5] + "/";
-
-
-    WB=document.getElementById("WorkBench");
-
-    var canvas = document.getElementById('canvas');
-    context = canvas.getContext('2d');
-
-    img = new Image();
-    img.src = Url;
-    img.onload = function () {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        WB.height=img.height;
-        context.drawImage(img, 0, 0, img.width, img.height);
-        canvas.removeAttribute("data-caman-id");
-    };
-
+    var scaleX = [];
+    var scaley = [];
     let fileName = "";
+    var window_width = $(window).width();
+    var window_height = $(window).height();
+
+    WB = document.getElementById("WorkBench");
+    var canvas = document.getElementById('canvas');
+    context = canvas.getContext('2d');    
     const revertBtn = document.getElementById("revert-btn");
     const downloadBtn = document.getElementById("download-btn");
     $(".drawDiv").removeAttr("style");
     $(".dkonvajs-content").removeAttr("style");
+    var toggle = $('#ss_toggle');
+    var menu = $('#ss_menu');
 
-    var result;
-    //get url of image (image address):
-    var req = new XMLHttpRequest();
-    req.open('GET',Url);
-    req.onload = function(){
-        console.log(req.responseText);
+    // get WebService Unique url for each Patient
+    var currentURL = document.URL;
+    var res = currentURL.split("/");
+    var Url_SetPoints = "http://127.0.0.1:8000/webservice/setPoints/" + res[4] + "/" + res[5] + "/";
+    var Url = 'http://127.0.0.1:8000/webservice/getImage/' + res[4] + "/" + res[5] + "/";
+
+    // set image on canvas:
+    img = new Image();
+    img.src = Url;
+    img.onload = function () {
+        ImgOnload();
     };
-    req.send();
-    // var str = document.Url;
-    // console.log(str);
-    
 
-
-
-        //add filter and effects:
-        document.addEventListener("click", e => {
-            if (e.target.classList.contains("filter-btn")) {
-                if (e.target.classList.contains("brightness-add")) {
-                    Caman("#canvas", img, function () {
-                        this.brightness(5).render();
-                    });
-                } else if (e.target.classList.contains("brightness-remove")) {
-                    Caman("#canvas", img, function () {
-                        this.brightness(-5).render();
-                    });
-                } else if (e.target.classList.contains("contrast-add")) {
-                    Caman("#canvas", img, function () {
-                        this.contrast(5).render();
-                    });
-                } else if (e.target.classList.contains("contrast-remove")) {
-                    Caman("#canvas", img, function () {
-                        this.contrast(-5).render();
-                    });
-                }
+    //add filter and effects:
+    document.addEventListener("click", e => {
+        if (e.target.classList.contains("filter-btn")) {
+            if (e.target.classList.contains("brightness-add")) {
+                Caman("#canvas", img, function () {
+                    this.brightness(5).render();
+                });
+            } else if (e.target.classList.contains("brightness-remove")) {
+                Caman("#canvas", img, function () {
+                    this.brightness(-5).render();
+                });
+            } else if (e.target.classList.contains("contrast-add")) {
+                Caman("#canvas", img, function () {
+                    this.contrast(5).render();
+                });
+            } else if (e.target.classList.contains("contrast-remove")) {
+                Caman("#canvas", img, function () {
+                    this.contrast(-5).render();
+                });
             }
+        }
 
-        });
+    });
     $(".punctuation").click(function (e) {
-
-        //for PunctuationPunctuation on canvas!
-
-        $("#canvas").click(function (ev) {
-            mouseX = ev.pageX;
-            mouseY = ev.pageY;
-            // console.log(mouseX + " " + mouseY);
-            var color = "rgb(248, 248, 91)";
-            var size = "7px";
-            XPosition = mouseX;
-            YPosition = mouseY;
-
-            points.push({
-                xpos: XPosition,
-                ypos: YPosition
-            });
-            i++;
-            console.log(i);
-
-            $("body").append(
-                $(`<canvas id= ${i}></canvas>`)
-                    .css("position", "absolute")
-                    .css("top", mouseY + "px")
-                    .css("left", mouseX + "px")
-                    .css("width", size)
-                    .css("height", size)
-                    .css("background-color", color)
-                    .css("cursor", "move")
-                    .css("border-radius", "30px")
-            );
-        });
+        ProbeOnMainCanvas();
     });
 
-    //download:
+    //#region download operation
     downloadBtn.addEventListener("click", () => {
         //get the file extension:
         const fileExt = fileName.slice(-4);
@@ -171,14 +91,19 @@ $(document).ready(function () {
         //dispatch ev
         link.dispatchEvent(ev);
     }
+    //#endregion
+
+
     $(".Erase-btn").click(function (e) {
-        for (var k = 1; k <= i; k++) {
-            $(`#${k}`).remove();
-        }
+        Erase();
     });
+
     $(".getPoints-btn").click(function (e) {
         for (var j = 0; j < points.length; j++) {
+            scaleX[j] = (points[j].xpos) / window_width;
+            scaley[j] = (points[j].ypos) / window_height;
             console.log("x = " + points[j].xpos + "\n" + "y = " + points[j].ypos);
+            console.log("scalex = " + scaleX[j] + "\n" + "scaley = " + scaley[j]);
         }
         // var getJSON = function (url, callback) {
         //     var xhr = new XMLHttpRequest();
@@ -210,7 +135,25 @@ $(document).ready(function () {
         //             }
         //         });
     });
+
     $(".addPoints-btn").click(function (e) {
+        for (let i = 0; i < points.length; i++) {
+
+            console.log(points[i].xpos + "   " + points[i].ypos);
+        }
+        $.ajax({
+            type: "POST",
+            url: Url_SetPoints,
+            // The key needs to match your method's input parameter (case-sensitive).
+            data: JSON.stringify({ POINTS: points }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) { alert(data); },
+            failure: function (errMsg) {
+                alert(errMsg);
+            }
+        });
+        //#region first algo for ajax
         //first method
         // sendJSON(points);
 
@@ -235,8 +178,10 @@ $(document).ready(function () {
         //         }
         //     });
         // });
+        //#endregion
     });
 
+    //#region second algo for ajax
     // function sendJSON(object) {
     //     // Creating a XHR object
     //     let xhr = new XMLHttpRequest();
@@ -271,12 +216,25 @@ $(document).ready(function () {
     //     xhr.send(data);
     // }
 
-    // for undo
+    //#endregion
+
+
+    //#region for undo
     $("#undo").click(function (e) {
-        $(`#${i - j}`).removeAttr("style");
-        j += 1;
-        console.log(j);
+        undo();
     });
+    function KeyPress(e) {
+        var evtobj = window.event ? event : e
+        if (evtobj.keyCode == 90 && evtobj.ctrlKey) {
+            console.log("Ctrl+z");
+            undo();
+        }
+
+    }
+    document.onkeydown = KeyPress;
+    //#endregion
+
+    //#region Redo(TODO)
     // redo : Todo!
     //     $(".redo").click(function (e) { 
     //         $(`#${i - j}`).Attr("css", { backgroundColor: "gray", position: absolute ,  });
@@ -284,10 +242,106 @@ $(document).ready(function () {
     //         console.log(j);
 
     //     });
+
+
+
+    //#endregion
     revertBtn.addEventListener("click", e => {
         Caman("#canvas", img, function () {
             this.revert();
         });
     });
+
+    //#region  toggle btn
+    $('#ss_toggle').on('click', function (ev) {
+        rot = parseInt($(this).data('rot')) - 180;
+        menu.css('transform', 'rotate(' + rot + 'deg)');
+        menu.css('webkitTransform', 'rotate(' + rot + 'deg)');
+        if ((rot / 180) % 2 == 0) {
+            //Moving in
+            toggle.parent().addClass('ss_active');
+            toggle.addClass('close');
+        } else {
+            //Moving Out
+            toggle.parent().removeClass('ss_active');
+            toggle.removeClass('close');
+        }
+        $(this).data('rot', rot);
+    });
+
+
+    menu.on('transitionend webkitTransitionEnd oTransitionEnd', function () {
+        if ((rot / 180) % 2 == 0) {
+            $('#ss_menu div i').addClass('ss_animate');
+        } else {
+            $('#ss_menu div i').removeClass('ss_animate');
+        }
+    });
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36251023-1']);
+    _gaq.push(['_setDomainName', 'jqueryscript.net']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    //#endregion
+
+
+
+    //#region External Functions
+    function undo() {
+        $(`#${i - j}`).removeAttr("style");
+        j += 1;
+        console.log(j);
+    }
+    function Erase() {
+        for (var k = 1; k <= i; k++) {
+            $(`#${k}`).remove();
+        }
+    }
+    function ProbeOnMainCanvas() {
+        //for PunctuationPunctuation on canvas!
+        $("#canvas").click(function (ev) {
+            mouseX = ev.pageX;
+            mouseY = ev.pageY;
+            // console.log(mouseX + " " + mouseY);
+            var color = "rgb(248, 248, 91)";
+            var size = "7px";
+            XPosition = mouseX;
+            YPosition = mouseY;
+
+            points.push({
+                xpos: (XPosition / window_width),
+                ypos: (YPosition / window_height)
+            });
+            i++;
+            console.log(i);
+
+            $("body").append(
+                $(`<canvas id= ${i}></canvas>`)
+                    .css("position", "absolute")
+                    .css("top", mouseY + "px")
+                    .css("left", mouseX + "px")
+                    .css("width", size)
+                    .css("height", size)
+                    .css("background-color", color)
+                    .css("cursor", "move")
+                    .css("border-radius", "30px")
+            );
+        });
+    }
+    function ImgOnload() {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        WB.height = img.height;
+        context.drawImage(img, 0, 0, img.width, img.height);
+        canvas.removeAttribute("data-caman-id");
+    }
+    //#endregion
 });
 
